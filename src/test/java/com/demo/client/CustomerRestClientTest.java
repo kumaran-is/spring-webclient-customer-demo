@@ -15,7 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomerRestClientTest {
 	
-	WebClient webClient = WebClient.create(BASE_SERVICE_URL);
+	// WebClient webClient = WebClient.create(BASE_SERVICE_URL);
+	WebClient webClient = WebClient.builder().baseUrl(BASE_SERVICE_URL).build();
 	CustomerRestClient customerRestClient = new CustomerRestClient(webClient);
 	
   @Test
@@ -30,7 +31,7 @@ public class CustomerRestClientTest {
     	 int customerId = 11;
        CustomerDTO customer = customerRestClient.retrieveCustomerById(customerId);
        System.out.println("retrieveCustomerById >>> " + customer);
-       assertEquals("sachin3", customer.getName());
+       assertEquals("James", customer.getName());
     } 
     
   @Test
@@ -54,14 +55,13 @@ public class CustomerRestClientTest {
   void deleteCustomer(){
 	  int customerId = 2;
       String message = customerRestClient.deleteCustomerById(2);
-      String expectedMessage = "Employee deleted successfully.";
-      assertEquals(expectedMessage,message);
+      assertEquals(null,message);
   }
   
   @Test
   void updateCustomer(){
 
-      int customerId = 2;
+      int customerId = 8;
       CustomerDTO customer = new CustomerDTO(null,"Jack", null, null);
       CustomerDTO updatedCustomer = customerRestClient.updateCustomer(customerId, customer);
       assertEquals("Jack", updatedCustomer.getName());

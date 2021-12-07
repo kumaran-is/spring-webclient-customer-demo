@@ -1,10 +1,7 @@
 package com.demo.client;
 
-import java.time.Duration;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import static com.demo.constants.ApplicationConstants.*;
@@ -40,7 +37,8 @@ public class CustomerRestClient {
     public CustomerDTO retrieveCustomerById(int customerId) {
 
         try {
-            return webClient.get().uri(CUSTOMERS_ENDPOINT_URL, customerId)
+        	String url = CUSTOMERS_ENDPOINT_URL.concat("/{customerId}");
+            return webClient.get().uri(url, customerId)
                     .retrieve()
                     .bodyToMono(CustomerDTO.class)
                     .block();
@@ -74,7 +72,8 @@ public class CustomerRestClient {
     
     public String deleteCustomerById(int customerId) {
         try {
-            return webClient.delete().uri(CUSTOMERS_ENDPOINT_URL, customerId)
+        	String url = CUSTOMERS_ENDPOINT_URL.concat("/{customerId}");
+            return webClient.delete().uri(url , customerId)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
@@ -92,7 +91,8 @@ public class CustomerRestClient {
     public CustomerDTO updateCustomer(int customerId, CustomerDTO customerDTO) {
 
         try {
-            return webClient.put().uri(CUSTOMERS_ENDPOINT_URL, customerId)
+        	String url = CUSTOMERS_ENDPOINT_URL.concat("/{customerId}");
+            return webClient.put().uri(url, customerId)
                     .bodyValue(customerDTO)
                     .retrieve()
                     .bodyToMono(CustomerDTO.class)
