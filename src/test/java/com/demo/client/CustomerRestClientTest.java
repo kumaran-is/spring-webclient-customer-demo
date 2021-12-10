@@ -1,6 +1,8 @@
 package com.demo.client;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.junit.jupiter.api.Assertions;
@@ -15,9 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomerRestClientTest {
 	
+	@Autowired
+	//private WebClient webClient;
 	// WebClient webClient = WebClient.create(BASE_SERVICE_URL);
-	WebClient webClient = WebClient.builder().baseUrl(BASE_SERVICE_URL).build();
-	CustomerRestClient customerRestClient = new CustomerRestClient(webClient);
+   WebClient webClient = WebClient.builder().baseUrl(BASE_SERVICE_URL).build();
+CustomerRestClient customerRestClient = new CustomerRestClient(webClient);
 	
   @Test
     void retrieveAllCustomers(){
